@@ -3,7 +3,7 @@
 
 <head>
   <title>PiVPN Web</title>
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -11,25 +11,29 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900">
   <div id="app" class="container mx-auto">
     <div v-if="authenticated === true">
-      <h1 class="text-4xl font-medium mt-10 mb-2">PiVPN Web</h1>
-      <h2 class="text-sm text-gray-400 mb-10">{{username}}@{{hostname}} · <span class="cursor-pointer hover:underline" @click="logout">
-        Logout
-        <svg class="h-3 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
-      </span></h2>
+      <h1 class="text-4xl dark:text-gray-100 font-medium mt-10 mb-2">PiVPN Web</h1>
+      <h2 class="text-sm text-gray-400 dark:text-gray-300 mb-10">{{username}}@{{hostname}} · <span
+          class="cursor-pointer hover:underline" @click="logout">
+          Logout
+          <svg class="h-3 inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </span></h2>
 
-      <div class="shadow-md rounded-lg bg-white overflow-hidden">
-        <div class="flex flex-row flex-auto items-center p-3 px-5 border border-b-2 border-gray-100">
+      <div class="shadow-md rounded-lg bg-white dark:bg-gray-800 dark:border dark:border-gray-700 overflow-hidden">
+        <div
+          class="flex flex-row flex-auto items-center p-3 px-5 border border-b-2 border-gray-100 dark:border-gray-700">
           <div class="flex-grow">
-            <p class="text-2xl font-medium">Clients</p>
+            <p class="text-2xl font-medium dark:text-gray-100">Clients</p>
           </div>
           <div class="flex-shrink-0">
             <button @click="clientCreate = true; clientCreateName = '';"
-              class="hover:bg-green-400 hover:border-green-400 hover:text-white text-gray-700 border-2 border-gray-100 py-2 px-4 rounded inline-flex items-center transition">
+              class="hover:bg-green-400 dark:hover:bg-green-500 hover:border-green-400 dark:hover:border-green-500 hover:text-white dark:hover:text-gray-100 text-gray-700 dark:text-gray-300 border-2 border-gray-100 dark:border-gray-700 py-2 px-4 rounded inline-flex items-center transition">
               <svg class="w-4 mr-2" inline xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -40,24 +44,28 @@
         </div>
 
         <div>
-          <div v-if="clients && clients.length > 0" v-for="client in clients" :key="client.name" class="p-5 flex flex-row">
-            <div class="h-10 w-10 mr-5 rounded-full bg-gray-50 relative">
-              <svg class="w-6 m-2 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                fill="currentColor">
+          <div v-if="clients && clients.length > 0" v-for="client in clients" :key="client.name"
+            class="p-5 flex flex-row">
+            <div class="h-10 w-10 mr-5 rounded-full bg-gray-50 dark:bg-gray-900 relative">
+              <svg class="w-6 m-2 text-gray-300 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
               </svg>
               <img v-if="client.avatar" :src="client.avatar" class="w-10 rounded-full absolute top-0 left-0" />
 
               <div v-if="client.latestHandshake && ((new Date() - new Date(client.latestHandshake) < 1000 * 60 * 10))">
-                <div class="animate-ping w-4 h-4 p-1 bg-green-100 rounded-full absolute -bottom-1 -right-1"></div>
-                <div class="w-2 h-2 bg-green-300 rounded-full absolute bottom-0 right-0"></div>
+                <div
+                  class="animate-ping w-4 h-4 p-1 bg-green-100 dark:bg-green-800 rounded-full absolute -bottom-1 -right-1">
+                </div>
+                <div class="w-2 h-2 bg-green-300 dark:bg-green-500 rounded-full absolute bottom-0 right-0"></div>
               </div>
             </div>
 
             <div class="flex-grow">
-              <div class="text-gray-700" :title="'Created at ' + dateTime(new Date(client.createdAt))">{{client.name}}
+              <div class="text-gray-700 dark:text-gray-200"
+                :title="'Created at ' + dateTime(new Date(client.createdAt))">{{client.name}}
               </div>
-              <div v-if="client.allowedIps" class="text-gray-300 text-xs">{{client.iface}}
+              <div v-if="client.allowedIps" class="text-gray-300 dark:text-gray-500 text-xs">{{client.iface}}
                 · {{client.allowedIps.split('/')[0]}}
                 <span v-if="client.transferTx" title="Download">
                   ·
@@ -87,18 +95,21 @@
             </div>
 
             <div class="text-right">
-              <div class="text-gray-400">
+              <div class="text-gray-400 dark:text-gray-300">
 
                 <!-- Enable/Disable -->
-                <div @click="disableClient(client)" v-if="client.enabled === true" class="inline-block align-middle rounded-full w-10 h-6 mr-1 bg-green-400 cursor-pointer hover:bg-green-500 transition-all">
+                <div @click="disableClient(client)" v-if="client.enabled === true"
+                  class="inline-block align-middle rounded-full w-10 h-6 mr-1 bg-green-400 dark:bg-green-500 cursor-pointer hover:bg-green-500 dark:hover:bg-green-600 transition-all">
                   <div class="rounded-full w-4 h-4 m-1 ml-5 bg-white"></div>
                 </div>
-                <div @click="enableClient(client)" v-if="client.enabled === false" class="inline-block align-middle rounded-full w-10 h-6 mr-1 bg-gray-200 cursor-pointer hover:bg-gray-300 transition-all">
+                <div @click="enableClient(client)" v-if="client.enabled === false"
+                  class="inline-block align-middle rounded-full w-10 h-6 mr-1 bg-gray-200 dark:bg-gray-600 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition-all">
                   <div class="rounded-full w-4 h-4 m-1 bg-white"></div>
                 </div>
 
                 <!-- Show QR-->
-                <button class="align-middle bg-gray-100 hover:bg-blue-400 hover:text-white p-2 rounded transition"
+                <button
+                  class="align-middle bg-gray-100 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200 p-2 rounded transition"
                   title="Show QR Code" @click="qrcode = `/api/wireguard/client/${client.name}/qrcode.svg`">
                   <svg class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -109,7 +120,7 @@
 
                 <!-- Download Config -->
                 <a :href="'/api/wireguard/client/' + client.name + '/configuration'" download
-                  class="align-middle inline-block bg-gray-100 hover:bg-blue-400 hover:text-white p-2 rounded transition"
+                  class="align-middle inline-block bg-gray-100 dark:bg-gray-600 hover:bg-blue-400 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200 p-2 rounded transition"
                   title="Download Configuration">
                   <svg class="w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -119,7 +130,8 @@
                 </a>
 
                 <!-- Delete -->
-                <button class="align-middle bg-gray-100 hover:bg-red-400 hover:text-white p-2 rounded transition"
+                <button
+                  class="align-middle dark:bg-gray-600 hover:bg-red-400 dark:hover:bg-red-500 hover:text-white dark:hover:text-gray-200 p-2 rounded transition"
                   title="Delete Client" @click="clientDelete = client">
                   <svg class="w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -132,21 +144,25 @@
 
           </div>
           <div v-if="clients && clients.length === 0">
-            <p class="text-center m-10 text-gray-400 text-sm">There are no clients yet.<br /><br />
+            <p class="text-center m-10 text-gray-400 dark:text-gray-500 text-sm">There are no clients yet.<br /><br />
               <button @click="clientCreate = true; clientCreateName = '';"
-                class="bg-green-400 text-white hover:bg-green-500 border-2 border-none py-2 px-4 rounded inline-flex items-center transition">
+                class="bg-green-400 dark:bg-green-500 text-white dark:text-gray-200 hover:bg-green-500 dark:hover:bg-green-600 border-2 border-none py-2 px-4 rounded inline-flex items-center transition">
                 <svg class="w-4 mr-2" inline xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
                 <span class="text-sm">New Client</span>
               </button>
             </p>
           </div>
-          <div v-if="clients === null" class="text-gray-200 p-5">
-            <svg class="w-5 animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <div v-if="clients === null" class="text-gray-200 dark:text-gray-700 p-5">
+            <svg class="w-5 animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+              fill="currentColor">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
             </svg>
           </div>
         </div>
@@ -180,7 +196,7 @@
           To: "opacity-0"
       -->
           <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            <div class="absolute inset-0 bg-gray-500 dark:bg-black opacity-75 dark:opacity-50"></div>
           </div>
 
           <!-- This element is to trick the browser into centering the modal contents. -->
@@ -196,42 +212,43 @@
           To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       -->
           <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <div
-                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                  <svg class="h-6 w-6 text-green-600" inline xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
+                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-500 sm:mx-0 sm:h-10 sm:w-10">
+                  <svg class="h-6 w-6 text-green-600 dark:text-green-100" inline xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
                 </div>
                 <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-headline">
                     New Client
                   </h3>
                   <div class="mt-2">
-                    <p class="text-sm text-gray-500">
-                      <input class="rounded p-2 border-2 border-gray-100 focus:border-green-200 outline-none w-full"
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
+                      <input
+                        class="rounded p-2 border-2 border-gray-100 dark:border-gray-800 focus:border-green-200 dark:focus:border-green-400 dark:bg-gray-700 outline-none w-full"
                         type="text" v-model.trim="clientCreateName" placeholder="Name" />
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button v-if="clientCreateName.length" type="button" @click="createClient(); clientCreate = null"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-400 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-400 dark:bg-green-500 text-base font-medium text-white hover:bg-green-500 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-green-600 sm:ml-3 sm:w-auto sm:text-sm">
                 Create
               </button>
               <button v-else type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-200 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm cursor-not-allowed">
+                class="w-full inline-flex justify-center rounded-md border border-transparent dark:border-gray-700 shadow-sm px-4 py-2 bg-gray-200 dark:bg-gray-700 text-base font-medium text-white dark:text-gray-400 sm:ml-3 sm:w-auto sm:text-sm cursor-not-allowed">
                 Create
               </button>
               <button type="button" @click="clientCreate = null"
-                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                 Cancel
               </button>
             </div>
@@ -253,7 +270,7 @@
           To: "opacity-0"
       -->
           <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            <div class="absolute inset-0 bg-gray-500 dark:bg-black opacity-75 dark:opacity-50"></div>
           </div>
 
           <!-- This element is to trick the browser into centering the modal contents. -->
@@ -269,25 +286,25 @@
           To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       -->
           <div
-            class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
             role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <div
-                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                  class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-500 sm:mx-0 sm:h-10 sm:w-10">
                   <!-- Heroicon name: outline/exclamation -->
-                  <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" aria-hidden="true">
+                  <svg class="h-6 w-6 text-red-600 dark:text-red-100" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                <div class="flex-grow mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-headline">
                     Delete Client
                   </h3>
                   <div class="mt-2">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-300">
                       Are you sure you want to delete <strong>{{clientDelete.name}}</strong>?
                       This action cannot be undone.
                     </p>
@@ -295,13 +312,13 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button type="button" @click="deleteClient(clientDelete); clientDelete = null"
                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                 Delete
               </button>
               <button type="button" @click="clientDelete = null"
-                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-700 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                 Cancel
               </button>
             </div>
@@ -311,32 +328,41 @@
     </div>
 
     <div v-if="authenticated === false">
-      <h1 class="text-4xl font-medium my-16 text-gray-700 text-center">PiVPN Web</h1>
+      <h1 class="text-4xl font-medium my-16 text-gray-700 dark:text-gray-100 text-center">PiVPN Web</h1>
 
-      <form
-        @submit="login"
-        class="shadow rounded-md bg-white mx-auto w-64 p-5 overflow-hidden mt-10"
-      >
+      <form @submit="login"
+        class="shadow rounded-md bg-white dark:bg-gray-800 dark:border dark:border-gray-700 mx-auto w-64 p-5 overflow-hidden mt-10">
         <!-- Avatar -->
-        <div class="h-20 w-20 mb-10 mt-5 mx-auto rounded-full bg-gray-100 relative overflow-hidden">
-          <svg class="w-10 h-10 m-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-            fill="currentColor">
+        <div class="h-20 w-20 mb-10 mt-5 mx-auto rounded-full bg-gray-100 dark:bg-gray-900 relative overflow-hidden">
+          <svg class="w-10 h-10 m-5 text-gray-300 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
           </svg>
         </div>
 
-        <input type="text" name="username" placeholder="pi" v-model="username" class="px-2 py-1 text-sm text-gray-500 mb-2 border-2 border-gray-100 rounded-lg w-full focus:border-green-400 outline-none" />
-        <input type="password" name="password" placeholder="raspberry" v-model="password" class="px-2 py-1 text-sm text-gray-500 mb-5 border-2 border-gray-100 rounded-lg w-full focus:border-green-400 outline-none" />
-        <input type="text" name="multiFactorAuthCode" v-if="useMfa" placeholder="2FA Code" v-model="multiFactorAuthCode" class="px-2 py-1 text-sm text-gray-500 mb-5 border-2 border-gray-100 rounded-lg w-full focus:border-green-400 outline-none" />
+        <input type="text" name="username" placeholder="pi" v-model="username"
+          class="px-2 py-1 text-sm text-gray-500 dark:text-gray-100 dark:placeholder-gray-400 mb-2 border-2 border-gray-100 dark:border-gray-600 dark:bg-gray-700 rounded-lg w-full focus:border-green-400 dark:focus:border-green-500 outline-none" />
+        <input type="password" name="password" placeholder="raspberry" v-model="password"
+          class="px-2 py-1 text-sm text-gray-500 dark:text-gray-100 dark:placeholder-gray-400 mb-2 border-2 border-gray-100 dark:border-gray-600 dark:bg-gray-700 rounded-lg w-full focus:border-green-400 dark:focus:border-green-500 outline-none" />
+        <input type="text" name="multiFactorAuthCode" v-if="useMfa" placeholder="2FA Code" v-model="multiFactorAuthCode"
+          class="px-2 py-1 text-sm text-gray-500 dark:text-gray-100 dark:placeholder-gray-400 mb-2 border-2 border-gray-100 dark:border-gray-600 dark:bg-gray-700 rounded-lg w-full focus:border-green-400 dark:focus:border-green-500 outline-none" />
 
-        <button v-if="authenticating" class="bg-green-400 w-full rounded shadow py-2 text-sm text-white cursor-not-allowed">
-          <svg class="w-5 animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <button v-if="authenticating"
+          class="bg-green-400 w-full rounded shadow py-2 text-sm text-white cursor-not-allowed">
+          <svg class="w-5 animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
           </svg>
         </button>
-        <input v-if="!authenticating && username && password" type="submit" class="bg-green-400 w-full rounded shadow py-2 text-sm text-white hover:bg-green-500 transition cursor-pointer" value="Sign In">
-        <input v-if="!authenticating && (!username || !password)" type="submit" class="bg-gray-200 w-full rounded shadow py-2 text-sm text-white cursor-not-allowed" value="Sign In">
+        <input v-if="!authenticating && username && password" type="submit"
+          class="bg-green-400 dark:bg-green-500 w-full rounded shadow py-2 text-sm text-white hover:bg-green-500 dark:hover:bg-green-600 transition cursor-pointer"
+          value="Sign In">
+        <input v-if="!authenticating && (!username || !password)" type="submit"
+          class="bg-gray-200 dark:bg-gray-700 w-full rounded shadow py-2 text-sm text-white cursor-not-allowed"
+          value="Sign In">
       </form>
     </div>
 
@@ -344,14 +370,17 @@
 
       <svg class="w-5 animate-spin mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+        </path>
       </svg>
-      
+
     </div>
 
-    <p class="text-center m-10 text-gray-300 text-xs">Made by <a target="_blank" class="hover:underline"
-        href="https://emilenijssen.nl/?ref=pivpn-web">Emile Nijssen</a> · <a class="hover:underline"
-        href="https://github.com/weejewel/pivpn-web" target="_blank">GitHub</a></p>
+    <p class="text-center m-10 text-gray-300 dark:text-gray-600 text-xs">Made by <a target="_blank"
+        class="hover:underline" href="https://emilenijssen.nl/?ref=pivpn-web">Emile Nijssen</a>, modified by <a
+        target="_blank" class="hover:underline" href="https://github.com/cyrilschreiber3">Cyril Schreiber</a> · <a
+        class="hover:underline" href="https://github.com/cyrilschreiber3/pivpn-web" target="_blank">GitHub</a></p>
 
 
   </div>
